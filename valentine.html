@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.3;
+            color: #ff69b4;
+            animation: float 6s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .popup-container {
+            position: relative;
+            z-index: 10;
+            background: white;
+            padding: 50px 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #e74c3c;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .heart-gif {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            height: 80px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%);
+            color: #555;
+            position: absolute;
+            transition: none;
+        }
+
+        #noBtn:hover {
+            background: linear-gradient(135deg, #a8b5c9 0%, #a8b5c9 100%);
+        }
+
+        .success-message {
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .success-message h2 {
+            color: #e74c3c;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .success-message p {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .celebration-gif {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .hearts-gif {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-bg" id="heartBg"></div>
+    
+    <div class="popup-container">
+        <div id="question">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTNxaWE4NzBvZGd6dGJ6OHhqYnZ5dXU5Mnl1ZGJ5Y3Bia2w4ZGNxZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/G96zgIcQn1L2xpmdxi/giphy.gif" alt="Heart" class="heart-gif">
+            <h1>Will You Be My Valentine?</h1>
+            <div class="buttons">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMsg">
+            <video autoplay loop muted playsinline class="celebration-gif">
+                <source src="/mnt/user-data/uploads/vlipsy-friends-excited-ross-dCXSznDu.mp4" type="video/mp4">
+            </video>
+            <h2>Yay! You made my day!</h2>
+            <p>I'm so happy you said yes!<br>Happy Valentine's Day!</p>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGx0aWdmdjZiMGZxdXJ5azh0aHJyMG1vMnVsNW4yZmMycmY2bGJ4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/UO5elnTqo4vSg/giphy.gif" alt="Hearts" class="hearts-gif">
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background using CSS hearts instead of emoji
+        const heartBg = document.getElementById('heartBg');
+        
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '♥';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 6 + 's';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heartBg.appendChild(heart);
+        }
+
+        // Button functionality
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const successMsg = document.getElementById('successMsg');
+
+        // Yes button - show success message
+        yesBtn.addEventListener('click', () => {
+            question.style.display = 'none';
+            successMsg.style.display = 'block';
+        });
+
+        // No button - move away from cursor
+        noBtn.addEventListener('mouseenter', (e) => {
+            moveButton();
+        });
+
+        // Add mousemove listener to move button when cursor gets close
+        document.addEventListener('mousemove', (e) => {
+            const noRect = noBtn.getBoundingClientRect();
+            const distance = Math.sqrt(
+                Math.pow(e.clientX - (noRect.left + noRect.width / 2), 2) +
+                Math.pow(e.clientY - (noRect.top + noRect.height / 2), 2)
+            );
+            
+            // Move button when cursor gets within 100px
+            if (distance < 100) {
+                moveButton();
+            }
+        });
+
+        noBtn.addEventListener('click', (e) => {
+            // Just in case they manage to click it
+            moveButton();
+        });
+
+        function moveButton() {
+            const container = document.querySelector('.buttons');
+            const containerRect = container.getBoundingClientRect();
+            const yesRect = yesBtn.getBoundingClientRect();
+            const noRect = noBtn.getBoundingClientRect();
+            
+            let newX, newY;
+            let attempts = 0;
+            const maxAttempts = 50;
+            
+            do {
+                // Generate random position with wider range
+                const maxX = 400; // Wider horizontal range
+                const maxY = 200; // Wider vertical range
+                
+                newX = Math.random() * maxX - 150;
+                newY = Math.random() * maxY - 100;
+                
+                // Calculate the new button position relative to viewport
+                const containerX = containerRect.left;
+                const containerY = containerRect.top;
+                const btnWidth = noBtn.offsetWidth;
+                const btnHeight = noBtn.offsetHeight;
+                
+                const newBtnLeft = containerX + newX;
+                const newBtnTop = containerY + newY;
+                const newBtnRight = newBtnLeft + btnWidth;
+                const newBtnBottom = newBtnTop + btnHeight;
+                
+                // Check if new position overlaps with Yes button (with extra padding)
+                const padding = 20; // Extra space to prevent overlap
+                const overlaps = !(
+                    newBtnRight < yesRect.left - padding ||
+                    newBtnLeft > yesRect.right + padding ||
+                    newBtnBottom < yesRect.top - padding ||
+                    newBtnTop > yesRect.bottom + padding
+                );
+                
+                // Also ensure the button doesn't go too far off screen
+                const inBounds = (
+                    newBtnLeft > 50 &&
+                    newBtnRight < window.innerWidth - 50 &&
+                    newBtnTop > 50 &&
+                    newBtnBottom < window.innerHeight - 50
+                );
+                
+                if (!overlaps && inBounds) {
+                    break;
+                }
+                
+                attempts++;
+            } while (attempts < maxAttempts);
+            
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // Initialize No button position
+        setTimeout(() => {
+            noBtn.style.left = '200px';
+            noBtn.style.top = '0px';
+        }, 100);
+    </script>
+</body>
+</html>
